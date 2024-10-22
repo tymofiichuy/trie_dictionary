@@ -61,6 +61,7 @@ vector<int> console_interface::prepare_tokens(vector<string>& in){
 };
 
 void console_interface::parse(vector<int>& in){
+    reset_state();
     for(vector<int>::iterator i = in.begin(); i != in.end(); i++){
         state = program[state][*i];
         if(state == -1){
@@ -74,3 +75,11 @@ void console_interface::parse(vector<int>& in){
     }
     throw invalid_argument("Unable to parse");
 };
+
+void console_interface::get_state(){
+    cout << "State: " << state << "\n";
+}
+
+void console_interface::reset_state(){
+    state = 0;
+}

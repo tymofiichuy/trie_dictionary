@@ -97,9 +97,19 @@ public:
     void reset_state();
     //void help(int command);
 
-    friend class trie;
+    friend class dictionatry;
+};
+
+class dictionary{
+    void create(string& set_name);
+    void insert(string& set_name, string& value);
+    void print(string& set_name);
+    void contains(string& set_name, string& value);
+    void search(string& set_name, string order = "NULL");
+    void search_where_between(string& set_name, string& from, string& to, string order = "NULL");
+    void serach_where_match(string& set_name, string& pattern, string order = "NULL");
 };
 
 class trie{
-//for later
+    //for later
 };
