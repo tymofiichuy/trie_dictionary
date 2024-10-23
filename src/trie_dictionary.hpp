@@ -2,6 +2,17 @@
 #include<string>
 using namespace std;
 
+class dictionary{
+public:
+    void create(string& set_name);
+    void insert(string& set_name, string& value);
+    void print(string& set_name);
+    void contains(string& set_name, string& value);
+    void search(string& set_name, string order = "NULL");
+    void search_where_between(string& set_name, string& from, string& to, string order = "NULL");
+    void search_where_match(string& set_name, string& pattern, string order = "NULL");
+};
+
 class console_interface{
 private:
     //states:
@@ -83,31 +94,21 @@ private:
                           {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*SEARCH set_name WHERE BETWEEN from to DESC*/,
                           {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*SEARCH set_name WHERE MATCH pattern ASC*/,
                           {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*SEARCH set_name WHERE MATCH pattern DESC*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 26}/*HELP*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*HELP value*/,
+                          {26, 26, 26, 26, 26, -1, -1, -1, -1, -1, -1, -1}/*HELP*/,
+                          {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*HELP command*/,
                          };
 public:
     void intro();
     vector<string> tokenize_input(string& in);
     vector<int> prepare_tokens(vector<string>& in);
     void parse(vector<int>& in);
-    void execute();
+    void execute(dictionary& env, vector<string>& tokens, vector<int>& prep_tokens);
 
     void get_state();
     void reset_state();
-    //void help(int command);
+    void help(int command = -1);
 
     friend class dictionatry;
-};
-
-class dictionary{
-    void create(string& set_name);
-    void insert(string& set_name, string& value);
-    void print(string& set_name);
-    void contains(string& set_name, string& value);
-    void search(string& set_name, string order = "NULL");
-    void search_where_between(string& set_name, string& from, string& to, string order = "NULL");
-    void serach_where_match(string& set_name, string& pattern, string order = "NULL");
 };
 
 class trie{

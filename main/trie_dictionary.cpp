@@ -6,6 +6,10 @@ int main(){
     vector<string> raw_tokens;
     vector<int> prepared_tokens;
     console_interface inter;
+    dictionary env;
+    bool parse = false;
+
+    inter.intro();
     while (true){
         getline(cin, in);
         if(in == "STOP"){
@@ -14,11 +18,22 @@ int main(){
         raw_tokens = inter.tokenize_input(in);
         prepared_tokens = inter.prepare_tokens(raw_tokens);
         try{
-            inter.parse(prepared_tokens);            
+            parse = true;
+            inter.parse(prepared_tokens);
+            //inter.get_state();           
         }
         catch(invalid_argument error){
+            parse = false;
             cout << error.what() << "\n";
         }
-        inter.get_state();
+        if(parse){
+            try{
+                inter.execute(env, raw_tokens, prepared_tokens);                
+            }
+            catch(invalid_argument error){
+                cout << error.what();
+                cout << ", enter 'HELP' for help." << endl;
+            }
+        }
     }
 }

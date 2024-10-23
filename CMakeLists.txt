@@ -10,7 +10,8 @@ set(MAIN_DIR ${CMAKE_SOURCE_DIR}/main)
 
 include_directories(${SOURCE_DIR})
 
-add_executable(trie_dictionary ${MAIN_DIR}/trie_dictionary.cpp ${SOURCE_DIR}/console_interface.cpp ${SOURCE_DIR}/main_structure.cpp)
+add_executable(trie_dictionary ${MAIN_DIR}/trie_dictionary.cpp ${SOURCE_DIR}/console_interface.cpp 
+${SOURCE_DIR}/main_structure.cpp)
 
 # ADD_SUBDIRECTORY(googletest-release-1.10.0)
 # enable_testing()

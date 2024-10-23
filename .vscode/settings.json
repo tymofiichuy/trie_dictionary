@@ -3,6 +3,8 @@
         "vector": "cpp",
         "xstring": "cpp",
         "format": "cpp",
-        "iostream": "cpp"
-    }
+        "iostream": "cpp",
+        "stdexcept": "cpp"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }
