@@ -1,6 +1,7 @@
 //part 1
 #include<sstream>
 #include<iostream>
+#include<algorithm>
 #include "trie_dictionary.hpp"
 
 vector<string> console_interface::tokenize_input(string& in){
@@ -8,49 +9,54 @@ vector<string> console_interface::tokenize_input(string& in){
     vector<string> out;
     string token;
     while(getline(in_stream, token, ' ')){
+        token.erase(0, token.find_first_not_of(' '));
+        token.erase(token.find_last_not_of(' ') + 1);
         if(!token.empty()){
-            out.push_back(token);            
+            out.push_back(token);                
         }
     }
     return out;
 };
 
 vector<int> console_interface::prepare_tokens(vector<string>& in){
-    string token;
+    string token = "";
+    string temp = "";
     vector<int> out;
     for(vector<string>::iterator i = in.begin(); i != in.end(); i++){
         token = *i;
-        if(token == "CREATE"){
+        temp.resize(token.size());
+        transform(token.begin(), token.end(), temp.begin(), toupper);
+        if(temp == "CREATE"){
             out.push_back(0);
         }
-        else if(token == "INSERT"){
+        else if(temp == "INSERT"){
             out.push_back(1);
         }
-        else if(token == "PRINT"){
+        else if(temp == "PRINT"){
             out.push_back(2);
         }
-        else if(token == "CONTAINS"){
+        else if(temp == "CONTAINS"){
             out.push_back(3);
         }
-        else if(token == "SEARCH"){
+        else if(temp == "SEARCH"){
             out.push_back(4);
         }
-        else if(token == "HELP"){
+        else if(temp == "HELP"){
             out.push_back(5);
         }
-        else if(token == "WHERE"){
+        else if(temp == "WHERE"){
             out.push_back(6);
         }
-        else if(token == "BETWEEN"){
+        else if(temp == "BETWEEN"){
             out.push_back(7);
         }
-        else if(token == "MATCH"){
+        else if(temp == "MATCH"){
             out.push_back(8);
         }
-        else if(token == "ASC"){
+        else if(temp == "ASC"){
             out.push_back(9);
         }
-        else if(token == "DESC"){
+        else if(temp == "DESC"){
             out.push_back(10);
         }
         else{
@@ -87,30 +93,30 @@ void console_interface::reset_state(){
 void console_interface::help(int command){
     switch(command){
         case -1:
-            cout << "CREATE: CREATE set_name - create new set inside dictionarty;\n\n"
-            << "INSERT: INSERT set_name value - inserts new word (value) to the set (set_name);\n\n"
-            << "PRINT: PRINT set_name - prints set (set_name) structure;\n\n"
-            << "CONTAINS: CONTAINS set_name value - checks set (set_name) for the word (value) existance;\n\n"
+            cout << "CREATE: CREATE set_name - creates a new set inside the dictionary;\n\n"
+            << "INSERT: INSERT set_name value - inserts a new word (value) to the the set (set_name);\n\n"
+            << "PRINT: PRINT set_name - prints the structure of the set (set_name);\n\n"
+            << "CONTAINS: CONTAINS set_name value - checks if the word (value) exists in the set (set_name);\n\n"
             << "SEARCH: SEARCH set_name [WHERE queue] [ASC|DESC] - returns words from the set (set_name) "
-            << "by some rule: no rule - all words, WHERE BETWEEN - from word 'from' to 'to'"
-            << ", MATCH - by mask, ASC|DESC corresponds to output order.\n\n";
+            << "based on certain rules: no rule returns all words, WHERE BETWEEN 'from' 'to' filters between two words"
+            << ", MATCH filters by mask, ASC|DESC determines the output order.\n\n";
             break;
         case 0:
-            cout << "CREATE: CREATE set_name - create new set inside dictionarty.\n\n";
+            cout << "CREATE: CREATE set_name - creates a new set inside the dictionary.\n\n";
             break;
         case 1:
-            cout << "INSERT: INSERT set_name value - inserts a new word (value) to the set (set_name).\n\n";
+            cout << "INSERT: INSERT set_name value - inserts a new word (value) to the the set (set_name).\n\n";
             break;
         case 2:
-            cout << "PRINT: PRINT set_name - prints set (set_name) structure.\n\n";
+            cout << "PRINT: PRINT set_name - prints the structure of the set (set_name).\n\n";
             break;
         case 3: 
-            cout << "CONTAINS: CONTAINS set_name value - checks set (set_name) for the word (value) existance.\n\n";
+            cout << "CONTAINS: CONTAINS set_name value - checks if the word (value) exists in the set (set_name).\n\n";
             break;
         case 4:
-            cout << "SEARCH: SEARCH set_name [WHERE queue] [ASC|DESC] - returns words from the set (set_name)"
-            << "by some rule: no rule - all words, WHERE BETWEEN - from word 'from' to 'to'"
-            << ", MATCH - by mask, ASC|DESC corresponds to output order.\n\n";
+            cout << "SEARCH: SEARCH set_name [WHERE queue] [ASC|DESC] - returns words from the set (set_name) "
+            << "based on certain rules: no rule returns all words, WHERE BETWEEN 'from' 'to' filters between two words"
+            << ", MATCH filters by mask, ASC|DESC determines the output order.\n\n";
             break;
     }
 }
@@ -174,7 +180,7 @@ void console_interface::intro(){
     <<"----------------------------------------------------\n"
     <<"|This specific database is designed to store words |\n"
     <<"|in a compact format and conditionally access them.|\n"
-    <<"|In case of any quetions, entrer 'HELP [command]', |\n"
+    <<"|In case of any quetions, enter 'HELP [command]',  |\n"
     <<"|to exit enter 'STOP'. Beware, the databaes exists |\n"
     <<"|only durind runtime, do not exit unless you are   |\n"
     <<"|finised your work.                                |\n"
