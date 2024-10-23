@@ -18,6 +18,24 @@ vector<string> console_interface::tokenize_input(string& in){
     return out;
 };
 
+bool console_interface::validate_name(string& in){
+    if(in.empty()){
+        return false;
+    }
+    for(string::iterator iter = in.begin(); iter != in.end(); iter++){
+        if(*iter > 'z' || *iter < '0'){
+            return false;
+        }
+        else if((*iter > '9' && *iter < 'A')||(*iter > 'Z' && *iter < 'a')){
+            return false;
+        }
+    }
+    if (*in.begin() < 'A'){
+        return false;
+    }
+    return true;
+}
+
 vector<int> console_interface::prepare_tokens(vector<string>& in){
     string token = "";
     string temp = "";
@@ -60,7 +78,12 @@ vector<int> console_interface::prepare_tokens(vector<string>& in){
             out.push_back(10);
         }
         else{
-            out.push_back(11);
+            if(validate_name(token)){
+                out.push_back(11);                
+            }
+            else{
+                throw invalid_argument("Unsupported name");
+            }
         }                
     }
     return out;

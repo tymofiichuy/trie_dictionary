@@ -104,6 +104,8 @@ private:
                           {26, 26, 26, 26, 26, -1, -1, -1, -1, -1, -1, -1}/*HELP*/,
                           {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}/*HELP command*/,
                          };
+
+    bool validate_name(string& in);
 public:
     void intro();
     vector<string> tokenize_input(string& in);

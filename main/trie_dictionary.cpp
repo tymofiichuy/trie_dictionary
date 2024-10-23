@@ -7,6 +7,7 @@ int main(){
     vector<int> prepared_tokens;
     console_interface inter;
     dictionary env;
+    bool prep = false;
     bool parse = false;
 
     inter.intro();
@@ -16,7 +17,14 @@ int main(){
             break;
         }
         raw_tokens = inter.tokenize_input(in);
-        prepared_tokens = inter.prepare_tokens(raw_tokens);
+        try{
+            prep = true;
+            prepared_tokens = inter.prepare_tokens(raw_tokens);            
+        }
+        catch(invalid_argument error){
+            prep = false;
+            cout << error.what() << "\n";
+        }
         try{
             parse = true;
             inter.parse(prepared_tokens);
@@ -26,7 +34,8 @@ int main(){
             parse = false;
             cout << error.what() << "\n";
         }
-        if(parse){
+        
+        if(prep && parse){
             try{
                 inter.execute(env, raw_tokens, prepared_tokens);                
             }
