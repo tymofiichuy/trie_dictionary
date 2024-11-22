@@ -199,7 +199,7 @@ void console_interface::execute(dictionary& env, vector<string>& tokens, vector<
 
 void console_interface::intro(){
     cout << "----------------------------------------------------\n"
-    << "|             Trie dictionary, ver 0.1             |\n"
+    << "|             Trie dictionary, ver 0.2             |\n"
     <<"----------------------------------------------------\n"
     <<"|This specific database is designed to store words |\n"
     <<"|in a compact format and conditionally access them.|\n"
